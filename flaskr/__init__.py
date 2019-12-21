@@ -1,7 +1,11 @@
 import os
 
 from flask import Flask
+from flask import jsonify
 
+import requests
+import sys
+from . import recommender
 
 def create_app(test_config=None):
     # create and configure the app
@@ -25,8 +29,19 @@ def create_app(test_config=None):
         pass
 
     # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
+    @app.route('/news-items')
+    def news_items_api():
+        recs = recommender.get_recommendations()
+        response = jsonify(recs)
+        response.headers.add('Access-Control-Allow-Origin', 'http://localhost:4200')
+        return response
+
+
+# news_resp = requests.get(url)
+#         news_resp_dict = news_resp.json()
+#         articles = news_resp_dict['articles']
+#         response = jsonify(articles)
+#         response.headers.add('Access-Control-Allow-Origin', 'http://localhost:4200')
+#         return response
 
     return app
