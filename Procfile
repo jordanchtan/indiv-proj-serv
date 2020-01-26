@@ -1,0 +1,1 @@
+web: gunicorn indiv_proj_app:'create_app()'
