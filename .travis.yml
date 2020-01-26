@@ -16,3 +16,8 @@ script:
   - python -m pytest -v
 # # linting test
 # - flake
+# deploy:
+#   provider: heroku
+#   api_key:
+#     secure: "0ce5bd93-fb16-4697-9738-869e4ca19a16"
+#   app: indiv-proj-serv
