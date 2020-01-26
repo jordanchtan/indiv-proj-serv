@@ -34,7 +34,7 @@ def create_app(test_config=None):
     def news_items_api():
         recs = recommender.get_recommendations()
         response = jsonify(recs)
-        response.headers.add('Access-Control-Allow-Origin', 'https://indiv-proj-serv.herokuapp.com/news-items')
+        response.headers.add('Access-Control-Allow-Origin', 'http://localhost:4200')
         return response
 
 
