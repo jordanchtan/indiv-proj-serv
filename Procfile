@@ -1,1 +1,1 @@
-web: gunicorn indiv_proj_app:'create_app()'
+web: gunicorn indiv_proj_serv:'create_app()'
