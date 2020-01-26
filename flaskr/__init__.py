@@ -34,7 +34,7 @@ def create_app(test_config=None):
     def news_items_api():
         recs = recommender.get_recommendations()
         response = jsonify(recs)
-        response.headers.add('Access-Control-Allow-Origin', 'http://localhost:4200')
+        response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
 
