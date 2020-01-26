@@ -1,1 +1,1 @@
-web: gunicorn indiv_proj_serv:'create_app()'
+web: gunicorn wsgi
