@@ -48,8 +48,8 @@ def create_app(test_config=None):
         data = request.json
         response = jsonify(data)
         response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers:', 'Authorization, Content-Type')
-        response.headers.add('Access-Control-Allow-Methods:', '*')
+        response.headers.add('Access-Control-Allow-Headers', 'Authorization, Content-Type')
+        response.headers.add('Access-Control-Allow-Methods', '*')
     
         return response
 
