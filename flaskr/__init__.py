@@ -11,12 +11,14 @@ from . import recommender
 
 def create_app(test_config=None):
     # create and configure the app
+    from . import db
+    
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
     )
-
+    db.init_app(app)
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -39,19 +41,26 @@ def create_app(test_config=None):
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
-    @app.route('/ratings', methods=['OPTIONS','POST'])
+    @app.route('/ratings', methods=['OPTIONS','POST','GET'])
     def add_rating():
-        # ratingVal = request.form['ratingVal']
-        # if request.method == 'OPTIONS':
-        #     return ""
-        # elif request.method == 'POST':
-        data = request.json
-        response = jsonify(data)
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers', 'Authorization, Content-Type')
-        response.headers.add('Access-Control-Allow-Methods', '*')
+        # db.query_db
+
+        if request.method == 'OPTIONS' or request.method == 'POST':
+            data = request.json
+            response = jsonify(data)
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            response.headers.add('Access-Control-Allow-Headers', 'Authorization, Content-Type')
+            response.headers.add('Access-Control-Allow-Methods', '*')
+            return response
+        elif request.method == 'GET':
+            for rating in db.query_db('select * from rating'):
+                print(rating)
+            return 'test'
+        
+
+
     
-        return response
+    
 
 
 # news_resp = requests.get(url)
