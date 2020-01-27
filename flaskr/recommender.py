@@ -35,7 +35,7 @@ def selectorVader(articles):
     sorted_articles_scores = sorted(articles_scores, key=lambda x : x[1], reverse=True)
     
     sorted_articles = [ x[0] for x in sorted_articles_scores ]
-    print([ x[1] for x in sorted_articles_scores ])
+    # print([ x[1] for x in sorted_articles_scores ])
 
     return sorted_articles[:10]
 

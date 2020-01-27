@@ -2,6 +2,8 @@ import os
 
 from flask import Flask
 from flask import jsonify
+from flask import request
+
 
 import requests
 import sys
@@ -30,11 +32,25 @@ def create_app(test_config=None):
         pass
 
     # a simple page that says hello
-    @app.route('/news-items')
-    def news_items_api():
+    @app.route('/news-items', methods=['GET'])
+    def get_news_items():
         recs = recommender.get_recommendations()
         response = jsonify(recs)
         response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+
+    @app.route('/ratings', methods=['OPTIONS','POST'])
+    def add_rating():
+        # ratingVal = request.form['ratingVal']
+        # if request.method == 'OPTIONS':
+        #     return ""
+        # elif request.method == 'POST':
+        data = request.json
+        response = jsonify(data)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Headers:', 'Authorization, Content-Type')
+        response.headers.add('Access-Control-Allow-Methods:', '*')
+    
         return response
 
 
