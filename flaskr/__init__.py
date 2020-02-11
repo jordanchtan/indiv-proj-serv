@@ -8,6 +8,12 @@ from flask import request
 import requests
 import sys
 from . import recommender
+from . import dto
+import json
+
+# set FLASK_APP=flaskr
+# set FLASK_ENV=development
+# flask run
 
 def create_app(test_config=None):
     # create and configure the app
@@ -45,17 +51,47 @@ def create_app(test_config=None):
     def add_rating():
         # db.query_db
 
-        if request.method == 'OPTIONS' or request.method == 'POST':
+        if request.method == 'OPTIONS':
             data = request.json
             response = jsonify(data)
             response.headers.add('Access-Control-Allow-Origin', '*')
             response.headers.add('Access-Control-Allow-Headers', 'Authorization, Content-Type')
             response.headers.add('Access-Control-Allow-Methods', '*')
             return response
+        elif request.method == 'POST':
+            ratingVal = request.json['ratingVal']
+            query = 'INSERT INTO rating (userID, ratingVal) VALUES(0, ?)'
+            db.query_db(query, [ratingVal], one=True)
+            # print(request)
+            # print(request.json)
+
+            data = request.json
+            response = jsonify(data)
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            response.headers.add('Access-Control-Allow-Headers', 'Authorization, Content-Type')
+            response.headers.add('Access-Control-Allow-Methods', '*')
+
+            return response
         elif request.method == 'GET':
-            for rating in db.query_db('select * from rating'):
-                print(rating)
-            return 'test'
+            data = []
+            for rating in db.query_db('SELECT * FROM rating'):
+                r = dto.Rating(rating['ratingID'], rating['userID'], rating['ratingVal'])
+                data.append(r.__dict__)
+                # print(rating)
+                # print(rating.json)
+                # print("yo")
+            response = jsonify(data)
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            response.headers.add('Access-Control-Allow-Headers', 'Authorization, Content-Type')
+            response.headers.add('Access-Control-Allow-Methods', '*')
+
+            return response
+            
+            # data = request.json
+            # response = jsonify(data)
+            # response.headers.add('Access-Control-Allow-Origin', '*')
+            # response.headers.add('Access-Control-Allow-Headers', 'Authorization, Content-Type')
+            # response.headers.add('Access-Control-Allow-Methods', '*')
         
 
 
