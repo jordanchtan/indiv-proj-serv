@@ -9,16 +9,18 @@ import requests
 import sys
 from . import recommender
 from . import dto
+# from . import indiv_models
 import json
 
 # set FLASK_APP=flaskr
 # set FLASK_ENV=development
 # flask run
 
+
 def create_app(test_config=None):
     # create and configure the app
     from . import db
-    
+
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY='dev',
@@ -47,7 +49,7 @@ def create_app(test_config=None):
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
-    @app.route('/ratings', methods=['OPTIONS','POST','GET'])
+    @app.route('/ratings', methods=['OPTIONS', 'POST', 'GET'])
     def add_rating():
         # db.query_db
 
@@ -55,7 +57,8 @@ def create_app(test_config=None):
             data = request.json
             response = jsonify(data)
             response.headers.add('Access-Control-Allow-Origin', '*')
-            response.headers.add('Access-Control-Allow-Headers', 'Authorization, Content-Type')
+            response.headers.add(
+                'Access-Control-Allow-Headers', 'Authorization, Content-Type')
             response.headers.add('Access-Control-Allow-Methods', '*')
             return response
         elif request.method == 'POST':
@@ -68,35 +71,33 @@ def create_app(test_config=None):
             data = request.json
             response = jsonify(data)
             response.headers.add('Access-Control-Allow-Origin', '*')
-            response.headers.add('Access-Control-Allow-Headers', 'Authorization, Content-Type')
+            response.headers.add(
+                'Access-Control-Allow-Headers', 'Authorization, Content-Type')
             response.headers.add('Access-Control-Allow-Methods', '*')
 
             return response
         elif request.method == 'GET':
             data = []
             for rating in db.query_db('SELECT * FROM rating'):
-                r = dto.Rating(rating['ratingID'], rating['userID'], rating['ratingVal'])
+                r = dto.Rating(rating['ratingID'],
+                               rating['userID'], rating['ratingVal'])
                 data.append(r.__dict__)
                 # print(rating)
                 # print(rating.json)
                 # print("yo")
             response = jsonify(data)
             response.headers.add('Access-Control-Allow-Origin', '*')
-            response.headers.add('Access-Control-Allow-Headers', 'Authorization, Content-Type')
+            response.headers.add(
+                'Access-Control-Allow-Headers', 'Authorization, Content-Type')
             response.headers.add('Access-Control-Allow-Methods', '*')
 
             return response
-            
+
             # data = request.json
             # response = jsonify(data)
             # response.headers.add('Access-Control-Allow-Origin', '*')
             # response.headers.add('Access-Control-Allow-Headers', 'Authorization, Content-Type')
             # response.headers.add('Access-Control-Allow-Methods', '*')
-        
-
-
-    
-    
 
 
 # news_resp = requests.get(url)
