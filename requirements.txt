@@ -1,10 +1,7 @@
-numpy==1.16.1
-Click==7.0
-transformers==2.4.1
 boto3==1.11.17
-Flask==1.1.1
-requests==2.22.0
+transformers==2.4.1
 pandas==1.0.1
+requests==2.22.0
+Flask==1.1.1
+Click==7.0
 torch==1.4.0
-reactionrnn==0.1
-vaderSentiment==3.2.1
