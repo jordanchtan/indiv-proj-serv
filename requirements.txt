@@ -2,7 +2,7 @@ Click==7.0
 requests==2.22.0
 Flask==1.1.1
 transformers==2.4.1
-torch==1.4.0+cpu
+torch==1.2.0+cpu
 boto3==1.11.17
 numpy==1.16.1
 pandas==1.0.1
