@@ -16,6 +16,7 @@ import json
 # set FLASK_ENV=development
 # flask run
 # pipreqs
+# https://download.pytorch.org/whl/cpu/torch-1.3.1%2Bcpu-cp37-cp37m-linux_x86_64.whl
 
 
 def create_app(test_config=None):
