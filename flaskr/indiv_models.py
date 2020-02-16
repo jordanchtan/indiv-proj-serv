@@ -2,13 +2,15 @@ import torch
 from transformers import *
 import pandas as pd
 import numpy as np
+from . import util
 
 
 class PositiveRatioModel:
 
     def __init__(self):
         # Load a trained model and vocabulary that you have fine-tuned
-        self.output_dir = './flaskr/model_save/'
+        util.downloadDirectoryFroms3("indivprojcht116", "model")
+        self.output_dir = './model/'
         self.tokenizer = BertTokenizer.from_pretrained(self.output_dir)
         self.model = BertForSequenceClassification.from_pretrained(
             self.output_dir)

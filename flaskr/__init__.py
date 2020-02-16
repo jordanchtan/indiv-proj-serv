@@ -15,6 +15,7 @@ import json
 # set FLASK_APP=flaskr
 # set FLASK_ENV=development
 # flask run
+# pipreqs
 
 
 def create_app(test_config=None):
@@ -41,10 +42,12 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    rec = recommender.Recommender()
     # a simple page that says hello
     @app.route('/news-items', methods=['GET'])
     def get_news_items():
-        recs = recommender.get_recommendations()
+        recs = rec.get_recommendations()
+
         response = jsonify(recs)
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
