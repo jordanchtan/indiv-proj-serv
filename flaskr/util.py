@@ -11,6 +11,7 @@ def downloadDirectoryFroms3(bucketName, remoteDirectoryName):
     # print(bucket.objects)
     # bucket.download_file("model/config.json", model/config.json)
     print("Start downloading...")
+    print("dir: ", os.listdir(os.curdir))
     for s3_object in bucket.objects.filter(Prefix=remoteDirectoryName):
 
         # print("Downloading ", s3_object)
@@ -20,6 +21,7 @@ def downloadDirectoryFroms3(bucketName, remoteDirectoryName):
                 os.makedirs(os.path.dirname(s3_object.key))
             bucket.download_file(s3_object.key, s3_object.key)
     print("Finish downloading.")
+    print("dir: ", os.listdir(os.curdir))
 
 
 def initModel():
