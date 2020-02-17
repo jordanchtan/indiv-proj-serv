@@ -11,7 +11,7 @@ class PositiveRatioModel:
         # Load a trained model and vocabulary that you have fine-tuned
         # self.initModel()
         print("PRM: ", os.listdir(os.curdir))
-        self.output_dir = './model/'
+        self.output_dir = './flaskr/model/'
         self.tokenizer = BertTokenizer.from_pretrained(self.output_dir)
         self.model = BertForSequenceClassification.from_pretrained(
             self.output_dir)

@@ -14,12 +14,12 @@ def downloadDirectoryFroms3(bucketName, remoteDirectoryName):
     print("dir: ", os.listdir(os.curdir))
     for s3_object in bucket.objects.filter(Prefix=remoteDirectoryName):
 
-        # print("Downloading ", s3_object)
+        print("Downloading ", s3_object.key)
         path, filename = os.path.split(s3_object.key)
         if filename != "":
-            if not os.path.exists(os.path.dirname(s3_object.key)):
-                os.makedirs(os.path.dirname(s3_object.key))
-            bucket.download_file(s3_object.key, s3_object.key)
+            if not os.path.exists("./flaskr/" + os.path.dirname(s3_object.key)):
+                os.makedirs("./flaskr/" + os.path.dirname(s3_object.key))
+            bucket.download_file(s3_object.key, "./flaskr/" + s3_object.key)
     print("Finish downloading.")
     print("dir: ", os.listdir(os.curdir))
 
