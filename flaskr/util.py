@@ -17,21 +17,21 @@ def downloadDirectoryFroms3(bucketName, remoteDirectoryName):
         print("Downloading ", s3_object.key)
         path, filename = os.path.split(s3_object.key)
         if filename != "":
-            if not os.path.exists(os.path.dirname(s3_object.key)):
-                os.makedirs(os.path.dirname(s3_object.key))
-            bucket.download_file(s3_object.key, s3_object.key)
-            # if not os.path.exists("./flaskr/" + os.path.dirname(s3_object.key)):
-            #     os.makedirs("./flaskr/" + os.path.dirname(s3_object.key))
-            # bucket.download_file(s3_object.key, "./flaskr/" + s3_object.key)
+            # if not os.path.exists(os.path.dirname(s3_object.key)):
+            #     os.makedirs(os.path.dirname(s3_object.key))
+            # bucket.download_file(s3_object.key, s3_object.key)
+            if not os.path.exists("/app/" + os.path.dirname(s3_object.key)):
+                os.makedirs("/app/" + os.path.dirname(s3_object.key))
+            bucket.download_file(s3_object.key, "/app/" + s3_object.key)
     print("Finish downloading.")
     print("path: ", os.path.dirname(os.path.abspath(__file__)))
-
+    print("dir: ", os.listdir(os.curdir)
 
 def initModel():
     print("##############START INIT MODEL")
-    q = Queue('dl', connection=conn)
+    q=Queue('dl', connection=conn)
     # util.downloadDirectoryFroms3("indivprojcht116", "model")
-    job = q.enqueue(downloadDirectoryFroms3,
+    job=q.enqueue(downloadDirectoryFroms3,
                     "indivprojcht116", "model")
 
     print("Added job. Current number: ", len(q))
