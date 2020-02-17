@@ -12,6 +12,8 @@ from . import dto
 # from . import indiv_models
 import json
 from . import util
+from rq import Queue
+from worker import conn
 
 # set FLASK_APP=flaskr
 # set FLASK_ENV=development
@@ -45,8 +47,38 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    util.initModel()
+    is_model_init = False
     # a simple page that says hello
+    @app.route('/model', methods=['GET'])
+    def init_model():
+        # if is_model_init == True:
+        #     response = jsonify(model_status="Model initialized.")
+        #     response.headers.add('Access-Control-Allow-Origin', '*')
+        #     return response
+
+        q = Queue('dl', connection=conn)
+        # if (q.is_empty() and not is_model_init):
+        job = q.enqueue(util.downloadDirectoryFroms3,
+                        "indivprojcht116", "model")
+        response = jsonify(model_status=job.get_status())
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+        # else:
+        #     running_job = q.jobs[0]
+        #     response = jsonify(model_status=running_job.get_status())
+        #     response.headers.add('Access-Control-Allow-Origin', '*')
+        #     return response
+
+    # @app.route('/model', methods=['GET'])
+    # def get_model_state():
+    #     util.initModel()
+    #     rec = recommender.Recommender()
+    #     recs = rec.get_recommendations()
+
+    #     response = jsonify(recs)
+    #     response.headers.add('Access-Control-Allow-Origin', '*')
+    #     return response
+
     @app.route('/news-items', methods=['GET'])
     def get_news_items():
         rec = recommender.Recommender()
