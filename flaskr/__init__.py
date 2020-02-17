@@ -17,6 +17,7 @@ import json
 # flask run
 # pipreqs
 # https://download.pytorch.org/whl/cpu/torch-1.4.0%2Bcpu-cp36-cp36m-linux_x86_64.whl
+# gunicorn==20.0.4
 
 
 def create_app(test_config=None):
