@@ -1,2 +1,14 @@
 model/
 bfg.jar
+dump.rdb
+__pycache__/worker.cpython-35.pyc
+__pycache__/worker.cpython-37.pyc
+flaskr/__pycache__/__init__.cpython-35.pyc
+flaskr/__pycache__/__init__.cpython-37.pyc
+flaskr/__pycache__/dto.cpython-35.pyc
+flaskr/__pycache__/indiv_models.cpython-35.pyc
+flaskr/__pycache__/indiv_models.cpython-37.pyc
+flaskr/__pycache__/recommender.cpython-35.pyc
+flaskr/__pycache__/recommender.cpython-37.pyc
+flaskr/__pycache__/util.cpython-35.pyc
+flaskr/__pycache__/util.cpython-37.pyc
