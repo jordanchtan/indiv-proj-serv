@@ -23,7 +23,7 @@ def downloadDirectoryFroms3(bucketName, remoteDirectoryName):
 
 
 def initModel():
-    print("##############CALLED INIT MODEL")
+    print("##############START INIT MODEL")
     q = Queue('dl', connection=conn)
     # util.downloadDirectoryFroms3("indivprojcht116", "model")
     job = q.enqueue(downloadDirectoryFroms3,
@@ -36,3 +36,4 @@ def initModel():
         secs += 1
         if secs % 5 == 0:
             print("Waiting to finish job: ", secs)
+    print("##############END INIT MODEL")
