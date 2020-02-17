@@ -8,13 +8,11 @@ import time
 def downloadDirectoryFroms3(bucketName, remoteDirectoryName):
     s3_resource = boto3.resource('s3')
     bucket = s3_resource.Bucket(bucketName)
-    # print("1")
     # print(bucket.objects)
     # bucket.download_file("model/config.json", model/config.json)
     print("Start downloading...")
     for s3_object in bucket.objects.filter(Prefix=remoteDirectoryName):
 
-        # print("2")
         print("Downloading ", s3_object)
         path, filename = os.path.split(s3_object.key)
         if filename != "":
