@@ -13,7 +13,7 @@ def downloadDirectoryFroms3(bucketName, remoteDirectoryName):
     print("Start downloading...")
     for s3_object in bucket.objects.filter(Prefix=remoteDirectoryName):
 
-        print("Downloading ", s3_object)
+        # print("Downloading ", s3_object)
         path, filename = os.path.split(s3_object.key)
         if filename != "":
             if not os.path.exists(os.path.dirname(s3_object.key)):
@@ -23,12 +23,13 @@ def downloadDirectoryFroms3(bucketName, remoteDirectoryName):
 
 
 def initModel():
+    print("##############CALLED INIT MODEL")
     q = Queue('dl', connection=conn)
     # util.downloadDirectoryFroms3("indivprojcht116", "model")
     job = q.enqueue(downloadDirectoryFroms3,
                     "indivprojcht116", "model")
 
-    print("Queued job: ", job)
+    print("Added job. Current number: ", len(q))
     secs = 0
     while job.get_status() != "finished" and job.get_status() != "failed":
         time.sleep(1)
