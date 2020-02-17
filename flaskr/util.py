@@ -24,7 +24,7 @@ def downloadDirectoryFroms3(bucketName, remoteDirectoryName):
             #     os.makedirs("./flaskr/" + os.path.dirname(s3_object.key))
             # bucket.download_file(s3_object.key, "./flaskr/" + s3_object.key)
     print("Finish downloading.")
-    print("dir: ", os.listdir(os.curdir))
+    print("path: ", os.path)
 
 
 def initModel():
