@@ -11,6 +11,7 @@ from . import recommender
 from . import dto
 # from . import indiv_models
 import json
+from . import util
 
 # set FLASK_APP=flaskr
 # set FLASK_ENV=development
@@ -44,10 +45,11 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    rec = recommender.Recommender()
+    util.initModel()
     # a simple page that says hello
     @app.route('/news-items', methods=['GET'])
     def get_news_items():
+        rec = recommender.Recommender()
         recs = rec.get_recommendations()
 
         response = jsonify(recs)

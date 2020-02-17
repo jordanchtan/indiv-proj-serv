@@ -1,5 +1,8 @@
 import boto3
 import os
+from rq import Queue
+from worker import conn
+import time
 
 
 def downloadDirectoryFroms3(bucketName, remoteDirectoryName):
@@ -19,3 +22,18 @@ def downloadDirectoryFroms3(bucketName, remoteDirectoryName):
                 os.makedirs(os.path.dirname(s3_object.key))
             bucket.download_file(s3_object.key, s3_object.key)
     print("Finish downloading.")
+
+
+def initModel():
+    q = Queue('dl', connection=conn)
+    # util.downloadDirectoryFroms3("indivprojcht116", "model")
+    job = q.enqueue(downloadDirectoryFroms3,
+                    "indivprojcht116", "model")
+
+    print("Queued job: ", job)
+    secs = 0
+    while job.get_status() != "finished" and job.get_status() != "failed":
+        time.sleep(1)
+        secs += 1
+        if secs % 5 == 0:
+            print("Waiting to finish job: ", secs)

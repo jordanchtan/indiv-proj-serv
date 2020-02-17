@@ -2,27 +2,24 @@ import torch
 from transformers import *
 import pandas as pd
 # import numpy as np
-from . import util
-from rq import Queue
-from worker import conn
 
 
 class PositiveRatioModel:
 
     def __init__(self):
         # Load a trained model and vocabulary that you have fine-tuned
-        self.getModel()
+        # self.initModel()
         self.output_dir = './model/'
         self.tokenizer = BertTokenizer.from_pretrained(self.output_dir)
         self.model = BertForSequenceClassification.from_pretrained(
             self.output_dir)
         self.setDevice()
 
-    def getModel(self):
-        q = Queue(connection=conn)
-        # util.downloadDirectoryFroms3("indivprojcht116", "model")
-        q.enqueue(util.downloadDirectoryFroms3,
-                  "indivprojcht116", "model")
+    # def initModel(self):
+    #     q = Queue('dl', connection=conn)
+    #     # util.downloadDirectoryFroms3("indivprojcht116", "model")
+    #     job = q.enqueue(util.downloadDirectoryFroms3,
+    #               "indivprojcht116", "model")
 
     def setDevice(self):
         # If there's a GPU available...
