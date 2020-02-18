@@ -22,7 +22,14 @@ def downloadDirectoryFroms3(bucketName, remoteDirectoryName):
             # bucket.download_file(s3_object.key, s3_object.key)
             if not os.path.exists("/app/" + os.path.dirname(s3_object.key)):
                 os.makedirs("/app/" + os.path.dirname(s3_object.key))
-            bucket.download_file(s3_object.key, "/app/" + s3_object.key)
+            try:
+                bucket.download_file(s3_object.key, "/app/" + s3_object.key)
+            except botocore.exceptions.ClientError as e:
+                print("ERR: ", e)
+                if e.response['Error']['Code'] == "404":
+                    print("The object does not exist.")
+                else:
+                    raise
     print("Finish downloading.")
     print("path: ", os.path.dirname(os.path.abspath(__file__)))
     print("dir: ", os.listdir(os.curdir))

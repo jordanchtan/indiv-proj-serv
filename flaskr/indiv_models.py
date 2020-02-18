@@ -12,13 +12,13 @@ class PositiveRatioModel:
         # self.initModel()
         print("PRM: ", os.listdir(os.curdir))
         self.output_dir = '/app/model/'
-        self.tokenizer = BertTokenizer.from_pretrained(
-            "https://indivprojcht116.s3.eu-west-2.amazonaws.com/model")
-        self.model = BertForSequenceClassification.from_pretrained(
-            "https://indivprojcht116.s3.eu-west-2.amazonaws.com/model")
-        # self.tokenizer = BertTokenizer.from_pretrained(self.output_dir)
+        # self.tokenizer = BertTokenizer.from_pretrained(
+        #     "https://indivprojcht116.s3.eu-west-2.amazonaws.com/model")
         # self.model = BertForSequenceClassification.from_pretrained(
-        #     self.output_dir)
+        #     "https://indivprojcht116.s3.eu-west-2.amazonaws.com/model")
+        self.tokenizer = BertTokenizer.from_pretrained(self.output_dir)
+        self.model = BertForSequenceClassification.from_pretrained(
+            self.output_dir)
         self.setDevice()
 
     # def initModel(self):
