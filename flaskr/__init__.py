@@ -47,7 +47,10 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    is_model_init = False
+    bucketName = "indivprojcht116"
+    remoteDirectoryName = "model"
+    util.downloadDirectoryFroms3(bucketName, remoteDirectoryName)
+
     # a simple page that says hello
     @app.route('/model', methods=['GET'])
     def init_model():

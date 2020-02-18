@@ -42,11 +42,11 @@ def initModel():
     job = q.enqueue(downloadDirectoryFroms3, "indivprojcht116", "model")
 
     print("Added job. Current number: ", len(q))
-    # secs = 0
-    # while job.get_status() != "finished" and job.get_status() != "failed":
-    #     time.sleep(1)
-    #     secs += 1
-    #     if secs % 5 == 0:
-    #         print("Waiting to finish job: ", secs)
+    secs = 0
+    while job.get_status() != "finished" and job.get_status() != "failed":
+        time.sleep(1)
+        secs += 1
+        if secs % 5 == 0:
+            print("Waiting to finish job: ", secs)
     print("##############END INIT MODEL")
     return job
