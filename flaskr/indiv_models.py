@@ -52,7 +52,7 @@ class PositiveRatioModel:
         # df = pd.read_csv("./flaskr/news.csv")
         # print(articles)
         df = pd.DataFrame(articles)
-        print("DF MEMORY USAGE: ", df.memory_usage)
+        print("DF MEMORY USAGE: ", df.memory_usage())
 
         # Report the number of sentences.
         print('Number of test sentences: {:,}\n'.format(df.shape[0]))
