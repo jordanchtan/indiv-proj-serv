@@ -50,12 +50,12 @@ class Recommender:
 
     def selectorIndiv(self, articles):
         # model = indiv_models.PositiveRatioModel()
-        scores = []
-        for article in articles:
-            score = self.model.predict([article])
-            scores.append(score)
+        # scores = []
+        # for article in articles:
+        #     score = self.model.predict([article])
+        #     scores.append(score)
 
-        # scores = self.model.predict(articles)
+        scores = self.model.predict(articles)
 
         articles_scores = list(zip(articles, scores))
         sorted_articles_scores = sorted(
