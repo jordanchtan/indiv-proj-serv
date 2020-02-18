@@ -25,14 +25,14 @@ def downloadDirectoryFroms3(bucketName, remoteDirectoryName):
             bucket.download_file(s3_object.key, "/app/" + s3_object.key)
     print("Finish downloading.")
     print("path: ", os.path.dirname(os.path.abspath(__file__)))
-    print("dir: ", os.listdir(os.curdir)
+    print("dir: ", os.listdir(os.curdir))
+
 
 def initModel():
     print("##############START INIT MODEL")
-    q=Queue('dl', connection=conn)
+    q = Queue('dl', connection=conn)
     # util.downloadDirectoryFroms3("indivprojcht116", "model")
-    job=q.enqueue(downloadDirectoryFroms3,
-                    "indivprojcht116", "model")
+    job = q.enqueue(downloadDirectoryFroms3, "indivprojcht116", "model")
 
     print("Added job. Current number: ", len(q))
     # secs = 0
