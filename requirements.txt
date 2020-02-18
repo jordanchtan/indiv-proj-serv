@@ -1,11 +1,12 @@
 https://download.pytorch.org/whl/cpu/torch-1.4.0%2Bcpu-cp36-cp36m-linux_x86_64.whl
-rq==1.2.2
-Click==7.0
-requests==2.22.0
-transformers==2.4.1
-boto3==1.11.17
-Flask==1.1.1
-redis==3.4.1
+Flask_SQLAlchemy==2.4.1
 pandas==1.0.1
+Click==7.0
+boto3==1.11.17
+transformers==2.4.1
+flask_heroku==0.1.9
+requests==2.22.0
+Flask==1.1.1
 gunicorn==20.0.4
+
 
