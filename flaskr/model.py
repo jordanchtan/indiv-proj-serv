@@ -19,6 +19,7 @@ class Rating(db.Model):
     __tablename__ = 'rating'
     id = db.Column(db.Integer, primary_key=True)
     ratingVal = db.Column(db.Integer, nullable=False)
+    user_email = db.Column(db.String(120), nullable=False)
     # user_id = db.Column(db.Integer, db.ForeignKey(
     #     'user.id'), nullable=False)
     # user = db.relationship('User',
@@ -27,7 +28,8 @@ class Rating(db.Model):
     def __repr__(self):
         return '<Rating %r>' % self.ratingVal
 
-    def __init__(self, ratingVal):
+    def __init__(self, ratingVal, user_email):
         self.ratingVal = ratingVal
+        self.user_email = user_email
         # self.user_id = user_id
         # self.user = category

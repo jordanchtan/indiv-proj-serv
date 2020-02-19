@@ -80,10 +80,11 @@ def create_app(test_config=None):
             return response
         elif request.method == 'POST':
             ratingVal = request.json['ratingVal']
+            user_email = request.json['userEmail']
             # query = 'INSERT INTO rating (userID, ratingVal) VALUES(0, ?)'
             # db.query_db(query, [ratingVal], one=True)
 
-            rating = Rating(ratingVal)
+            rating = Rating(ratingVal, user_email)
             # data = copy(rating. __dict__)
             # del data["_sa_instance_state"]
 
@@ -109,6 +110,10 @@ def create_app(test_config=None):
             #     r = dto.Rating(rating['ratingID'],
             #                    rating['userID'], rating['ratingVal'])
             #     data.append(r.__dict__)
+            for rating in Rating.query.all():
+                r = copy(rating. __dict__)
+                del r["_sa_instance_state"]
+                data.append(r)
 
             response = jsonify(data)
             response.headers.add('Access-Control-Allow-Origin', '*')
