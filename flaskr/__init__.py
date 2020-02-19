@@ -14,6 +14,7 @@ from . import util
 from flask_sqlalchemy import SQLAlchemy
 from flask_heroku import Heroku
 from flaskr.model import db, Rating, User
+import copy
 
 
 # set FLASK_APP=flaskr
@@ -111,7 +112,7 @@ def create_app(test_config=None):
             #                    rating['userID'], rating['ratingVal'])
             #     data.append(r.__dict__)
             for rating in Rating.query.all():
-                r = copy(rating. __dict__)
+                r = copy.copy(rating. __dict__)
                 del r["_sa_instance_state"]
                 data.append(r)
 
