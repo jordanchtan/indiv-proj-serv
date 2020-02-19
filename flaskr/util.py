@@ -1,7 +1,7 @@
 import boto3
 import os
-from rq import Queue
-from worker import conn
+# from rq import Queue
+# from worker import conn
 import time
 
 
