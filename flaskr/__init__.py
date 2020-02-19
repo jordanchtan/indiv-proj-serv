@@ -33,7 +33,7 @@ def create_app(test_config=None):
         SQLALCHEMY_TRACK_MODIFICATIONS=False
         # DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
     )
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
