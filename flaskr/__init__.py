@@ -22,6 +22,7 @@ from flaskr.model import db, Rating, User
 # pipreqs
 # https://download.pytorch.org/whl/cpu/torch-1.4.0%2Bcpu-cp36-cp36m-linux_x86_64.whl
 # gunicorn==20.0.4
+# psycopg2==2.8.4
 
 
 def create_app(test_config=None):
