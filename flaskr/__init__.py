@@ -8,14 +8,14 @@ from flask import request
 import requests
 import sys
 from . import recommender
-from . import dto
+# from . import dto
 import json
 from . import util
 from flask_sqlalchemy import SQLAlchemy
 from flask_heroku import Heroku
-from flaskr.model import db, Rating, User
+from flaskr.model import db, Rating
 import copy
-
+from . import batch_utils
 
 # set FLASK_APP=flaskr
 # set FLASK_ENV=development
@@ -61,12 +61,26 @@ def create_app(test_config=None):
 
     @app.route('/news-items', methods=['GET'])
     def get_news_items():
-        rec = recommender.Recommender()
-        recs = rec.get_recommendations()
+        articles = batch_utils.get_latest_batch_articles()
+        data = []
+        for article in articles:
+            a = copy.copy(article.__dict__)
+            del a["_sa_instance_state"]
+            data.append(a)
 
-        response = jsonify(recs)
+        response = jsonify(data)
         response.headers.add('Access-Control-Allow-Origin', '*')
+
         return response
+
+    # @app.route('/news-items', methods=['GET'])
+    # def get_news_items():
+    #     rec = recommender.Recommender()
+    #     recs = rec.get_recommendations()
+
+    #     response = jsonify(recs)
+    #     response.headers.add('Access-Control-Allow-Origin', '*')
+    #     return response
 
     @app.route('/ratings', methods=['OPTIONS', 'POST', 'GET'])
     def add_rating():
@@ -82,12 +96,10 @@ def create_app(test_config=None):
         elif request.method == 'POST':
             ratingVal = request.json['ratingVal']
             user_email = request.json['userEmail']
-            # query = 'INSERT INTO rating (userID, ratingVal) VALUES(0, ?)'
-            # db.query_db(query, [ratingVal], one=True)
+            article_id = request.json['article_id']
 
-            rating = Rating(ratingVal, user_email)
-            # data = copy(rating. __dict__)
-            # del data["_sa_instance_state"]
+            rating = Rating(ratingVal=ratingVal,
+                            user_email=user_email, article_id=article_id)
 
             try:
                 db.session.add(rating)
@@ -107,12 +119,8 @@ def create_app(test_config=None):
             return response
         elif request.method == 'GET':
             data = []
-            # for rating in db.query_db('SELECT * FROM rating'):
-            #     r = dto.Rating(rating['ratingID'],
-            #                    rating['userID'], rating['ratingVal'])
-            #     data.append(r.__dict__)
             for rating in Rating.query.all():
-                r = copy.copy(rating. __dict__)
+                r = copy.copy(rating.__dict__)
                 del r["_sa_instance_state"]
                 data.append(r)
 
