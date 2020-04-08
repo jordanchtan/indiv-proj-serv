@@ -4,19 +4,24 @@ from flask import jsonify
 # from reactionrnn import reactionrnn
 from . import indiv_models
 
-url = ('https://newsapi.org/v2/top-headlines?country=us&pageSize=100&apiKey=cde202936bf948eeb49767c5b3495493')
-
 
 class Recommender:
+    sources = ['abc-news', 'bbc-news', 'cbs-news', 'cnn', 'fox-news', 'nbc-news', 'the-huffington-post', 'the-wall-street-journal',
+               'the-washington-post',
+               'time',
+               'usa-today']
 
     def __init__(self):
         print("init recommender")
         self.model = indiv_models.PositiveRatioModel()
 
     def get_recommendations(self):
-        news_resp = requests.get(url)
-        news_resp_dict = news_resp.json()
-        articles = news_resp_dict['articles']
+        articles = []
+        for src in sources:
+            news_resp = requests.get('https://newsapi.org/v2/everything?sources=' + src + '&pageSize=100 & apiKey=cde202936bf948eeb49767c5b3495493)
+            news_resp_dict = news_resp.json()
+            arts = news_resp_dict['articles']
+            articles = articles + arts
 
         return self.selectorIndiv(articles)
 

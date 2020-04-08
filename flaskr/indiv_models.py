@@ -73,7 +73,7 @@ class PositiveRatioModel:
                 sent,                      # Sentence to encode.
                 add_special_tokens=True,  # Add '[CLS]' and '[SEP]'
                 pad_to_max_length=True,
-                max_length=30,
+                max_length=36,
             )
 
             input_ids.append(encoded_sent)

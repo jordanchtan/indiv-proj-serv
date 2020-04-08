@@ -33,9 +33,7 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SECRET_KEY='dev',
         SQLALCHEMY_TRACK_MODIFICATIONS=False
-        # DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
     )
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -59,28 +57,30 @@ def create_app(test_config=None):
     remoteDirectoryName = "model"
     util.downloadDirectoryFroms3(bucketName, remoteDirectoryName)
 
-    @app.route('/news-items', methods=['GET'])
-    def get_news_items():
-        articles = batch_utils.get_latest_batch_articles()
-        data = []
-        for article in articles:
-            a = copy.copy(article.__dict__)
-            del a["_sa_instance_state"]
-            data.append(a)
-
-        response = jsonify(data)
-        response.headers.add('Access-Control-Allow-Origin', '*')
-
-        return response
-
+    # heroku
     # @app.route('/news-items', methods=['GET'])
     # def get_news_items():
-    #     rec = recommender.Recommender()
-    #     recs = rec.get_recommendations()
+    #     articles = batch_utils.get_latest_batch_articles()
+    #     data = []
+    #     for article in articles:
+    #         a = copy.copy(article.__dict__)
+    #         del a["_sa_instance_state"]
+    #         data.append(a)
 
-    #     response = jsonify(recs)
+    #     response = jsonify(data)
     #     response.headers.add('Access-Control-Allow-Origin', '*')
+
     #     return response
+
+    # local
+    @app.route('/news-items', methods=['GET'])
+    def get_news_items():
+        rec = recommender.Recommender()
+        recs = rec.get_recommendations()
+
+        response = jsonify(recs)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
     @app.route('/ratings', methods=['OPTIONS', 'POST', 'GET'])
     def add_rating():
