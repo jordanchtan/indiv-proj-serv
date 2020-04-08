@@ -49,8 +49,6 @@ class PositiveRatioModel:
     def predict(self, articles):
 
         # Load the dataset into a pandas dataframe.
-        # df = pd.read_csv("./flaskr/news.csv")
-        # print(articles)
         df = pd.DataFrame(articles)
         print("DF MEMORY USAGE: ", df.memory_usage())
 
