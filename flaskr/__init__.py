@@ -57,30 +57,33 @@ def create_app(test_config=None):
     remoteDirectoryName = "model"
     util.downloadDirectoryFroms3(bucketName, remoteDirectoryName)
 
-    # heroku
-    # @app.route('/news-items', methods=['GET'])
-    # def get_news_items():
-    #     articles = batch_utils.get_latest_batch_articles()
-    #     data = []
-    #     for article in articles:
-    #         a = copy.copy(article.__dict__)
-    #         del a["_sa_instance_state"]
-    #         data.append(a)
-
-    #     response = jsonify(data)
-    #     response.headers.add('Access-Control-Allow-Origin', '*')
-
-    #     return response
-
-    # local
+    # HEROKU
     @app.route('/news-items', methods=['GET'])
     def get_news_items():
-        rec = recommender.Recommender()
-        recs = rec.get_recommendations()
+        articles = batch_utils.get_latest_batch_articles()
+        data = []
+        for article in articles:
+            a = copy.copy(article.__dict__)
+            del a["_sa_instance_state"]
+            data.append(a)
 
-        response = jsonify(recs)
+        response = jsonify(data)
         response.headers.add('Access-Control-Allow-Origin', '*')
+
         return response
+
+    # LOCAL
+    # @app.route('/news-items', methods=['GET'])
+    # def get_news_items():
+    #     rec = recommender.Recommender()
+    #     recs = rec.get_recommendations()
+
+    #     response = jsonify(recs)
+    #     response.headers.add('Access-Control-Allow-Origin', '*')
+    #     # response.headers.add(
+    #     #     'Access-Control-Allow-Headers', 'Authorization, Content-Type')
+    #     # response.headers.add('Access-Control-Allow-Methods', '*')
+    #     return response
 
     @app.route('/ratings', methods=['OPTIONS', 'POST', 'GET'])
     def add_rating():

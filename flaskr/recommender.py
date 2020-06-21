@@ -6,10 +6,6 @@ from . import indiv_models
 
 
 class Recommender:
-    sources = ['abc-news', 'bbc-news', 'cbs-news', 'cnn', 'fox-news', 'nbc-news', 'the-huffington-post', 'the-wall-street-journal',
-               'the-washington-post',
-               'time',
-               'usa-today']
 
     def __init__(self):
         print("init recommender")
@@ -17,13 +13,20 @@ class Recommender:
 
     def get_recommendations(self):
         articles = []
+        sources = ['abc-news']
+        # sources = ['abc-news', 'bbc-news', 'cbs-news', 'cnn', 'fox-news', 'nbc-news', 'the-huffington-post', 'the-wall-street-journal',
+        #            'the-washington-post',
+        #            'time',
+        #            'usa-today']
         for src in sources:
-            news_resp = requests.get('https://newsapi.org/v2/everything?sources=' + src + '&pageSize=100 & apiKey=cde202936bf948eeb49767c5b3495493)
+            news_resp = requests.get('https://newsapi.org/v2/everything?sources=' +
+                                     src + '&pageSize=100&apiKey=cde202936bf948eeb49767c5b3495493')
             news_resp_dict = news_resp.json()
             arts = news_resp_dict['articles']
             articles = articles + arts
 
         return self.selectorIndiv(articles)
+    #  https://newsapi.org/v2/everything?sources=cnn&pageSize=100&apiKey=cde202936bf948eeb49767c5b3495493
 
     # def selectorReact(self, articles):
     #     react = reactionrnn()
@@ -55,12 +58,12 @@ class Recommender:
 
     def selectorIndiv(self, articles):
         # model = indiv_models.PositiveRatioModel()
-        # scores = []
-        # for article in articles:
-        #     score = self.model.predict([article])
-        #     scores.append(score)
+        scores = []
+        for article in articles:
+            score = self.model.predict([article])
+            scores.append(score[0])
 
-        scores = self.model.predict(articles)
+        # scores = self.model.predict(articles)
 
         articles_scores = list(zip(articles, scores))
         sorted_articles_scores = sorted(

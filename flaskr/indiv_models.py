@@ -69,14 +69,15 @@ class PositiveRatioModel:
             #   (2) Prepend the `[CLS]` token to the start.
             #   (3) Append the `[SEP]` token to the end.
             #   (4) Map tokens to their IDs.
-            encoded_sent = self.tokenizer.encode(
-                sent,                      # Sentence to encode.
-                add_special_tokens=True,  # Add '[CLS]' and '[SEP]'
-                pad_to_max_length=True,
-                max_length=36,
-            )
+            if isinstance(sent, str):
+                encoded_sent = self.tokenizer.encode(
+                    sent,                      # Sentence to encode.
+                    add_special_tokens=True,  # Add '[CLS]' and '[SEP]'
+                    pad_to_max_length=True,
+                    max_length=36,
+                )
 
-            input_ids.append(encoded_sent)
+                input_ids.append(encoded_sent)
 
         # Create attention masks
         attention_masks = []
